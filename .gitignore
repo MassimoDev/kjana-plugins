@@ -1,0 +1,5 @@
+.DS_Store
+# Uscita dell'ultima prova del lettore: resta in locale per guardarla.
+test/.ultima-prova-lettore.jsonl
+# Cartelle di prova create a mano.
+.prova-*/

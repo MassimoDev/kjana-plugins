@@ -1,0 +1,15 @@
+{
+  "name": "kjana",
+  "description": "I plugin di Kjana per lavorare insieme con Claude Code",
+  "owner": {
+    "name": "Massimo Leonardo · Kjana",
+    "url": "https://vpskjana.com"
+  },
+  "plugins": [
+    {
+      "name": "ponte",
+      "source": "./plugins/ponte",
+      "description": "Passa lavoro fra il tuo Claude Code e quello di un collaboratore: pacchetti che si spiegano da soli, controllati all'uscita e all'arrivo."
+    }
+  ]
+}
