@@ -4,7 +4,7 @@ description: Prima lettura isolata di un pacchetto del Ponte già aperto in ~/Po
 argument-hint: <nome-del-pacchetto-in-arrivi>
 user-invocable: false
 context: fork
-agent: lettore
+agent: ponte:lettore
 background: false
 allowed-tools: Bash(${CLAUDE_PLUGIN_ROOT}/bin/ponte mostra *)
 ---

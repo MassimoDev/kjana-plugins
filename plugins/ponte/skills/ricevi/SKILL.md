@@ -2,7 +2,7 @@
 name: ricevi
 description: Apre un pacchetto del Ponte arrivato da un'altra persona (un .tar.gz con dentro PACCHETTO.md), lo controlla, lo fa leggere per primo a un lettore isolato e lo presenta in un riassunto. Poi la persona decide se lavorarlo, solo leggerlo o rifiutarlo. Trigger - «cosa mi è arrivato?», «apri il pacchetto di Carlo», «mi è arrivato un file del Ponte», «guarda questo .tar.gz», «ha risposto Massimo?», /ponte:ricevi.
 argument-hint: "[percorso del .tar.gz]"
-allowed-tools: Bash(ponte apri*) Bash(ponte annota *) Bash(ponte registro*) Bash(ponte rifiuta *) Bash(mkdir -p ~/Ponte/in-arrivo) Bash(open ~/Ponte/in-arrivo)
+allowed-tools: Skill(ponte:leggi) Bash(ponte apri*) Bash(ponte annota *) Bash(ponte registro*) Bash(ponte rifiuta *) Bash(mkdir -p ~/Ponte/in-arrivo) Bash(open ~/Ponte/in-arrivo)
 ---
 
 # Ricevi: un pacchetto del Ponte
