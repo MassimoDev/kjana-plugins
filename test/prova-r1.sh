@@ -52,9 +52,9 @@ echo "Uscita: il nome della cartella"
 # Il primo giro vero (12/11) ha dato «…sull-aliasla-query-dell-error»: l'iconv
 # di macOS esce con errore anche quando converte, e il titolo si ripeteva.
 nome_cartella() { basename "$(sed -n 's/^Cartella del pacchetto: //p' <<<"$USCITA")"; }
-corri nuovo "La query dell’errore sull’alias" --a "Guido"
+corri nuovo "La query dell’errore sull’alias" --a "Carlo"
 verifica "apostrofo curvo → il titolo una volta sola" test "$(nome_cartella)" = "$(date +%Y-%m-%d)-la-query-dell-errore-sull-alias"
-corri nuovo "Perché è così – città" --a "Guido"
+corri nuovo "Perché è così – città" --a "Carlo"
 verifica "lettere accentate → lettere semplici" test "$(nome_cartella)" = "$(date +%Y-%m-%d)-perche-e-cosi-citta"
 
 echo "Chi riceve: la cartella in-arrivo c'è da subito"
