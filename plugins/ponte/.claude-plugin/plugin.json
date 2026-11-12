@@ -1,7 +1,7 @@
 {
   "name": "ponte",
   "displayName": "Ponte",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Passa lavoro fra il tuo Claude Code e quello di un collaboratore: un pacchetto che si spiega da solo, controllato all'uscita (segreti, file vietati) e all'arrivo (impronte, quarantena, lettura isolata).",
   "author": {
     "name": "Massimo Leonardo · Kjana",

@@ -8,7 +8,7 @@
 # passate su quante ATTESE: se una prova smette di girare, il conto non torna.
 
 set -u
-ATTESE=62
+ATTESE=66
 
 QUI="$(cd "$(dirname "$0")" && pwd)"
 PONTE="$QUI/../plugins/ponte/bin/ponte"
@@ -47,6 +47,21 @@ verifica "l'archivio esiste" test -f "$CART.tar.gz"
 verifica "SHA256SUMS elenca 2 file" test "$(wc -l <"$CART/SHA256SUMS" | tr -d ' ')" = 2
 verifica "la «&» del titolo resta una «&»" grep -q '^titolo: Revisione & prezzi (bozza)$' "$CART/PACCHETTO.md"
 BUONO="$CART.tar.gz"; BUONA_ID="$(sed -n 's/^id: //p' "$CART/PACCHETTO.md")"
+
+echo "Uscita: il nome della cartella"
+# Il primo giro vero (12/11) ha dato «…sull-aliasla-query-dell-error»: l'iconv
+# di macOS esce con errore anche quando converte, e il titolo si ripeteva.
+nome_cartella() { basename "$(sed -n 's/^Cartella del pacchetto: //p' <<<"$USCITA")"; }
+corri nuovo "La query dell’errore sull’alias" --a "Guido"
+verifica "apostrofo curvo → il titolo una volta sola" test "$(nome_cartella)" = "$(date +%Y-%m-%d)-la-query-dell-errore-sull-alias"
+corri nuovo "Perché è così – città" --a "Guido"
+verifica "lettere accentate → lettere semplici" test "$(nome_cartella)" = "$(date +%Y-%m-%d)-perche-e-cosi-citta"
+
+echo "Chi riceve: la cartella in-arrivo c'è da subito"
+PONTE_HOME="$T/casa-io" "$PONTE" io "Massimo Prova" >/dev/null
+verifica "ponte io crea in-arrivo" test -d "$T/casa-io/in-arrivo"
+PONTE_HOME="$T/casa-nuovo" "$PONTE" nuovo "Per la risposta" --a "Carlo" >/dev/null
+verifica "ponte nuovo crea in-arrivo" test -d "$T/casa-nuovo/in-arrivo"
 
 echo "Uscita: segnaposto rimasti"
 corri nuovo "Senza riempire" --a "Carlo"; C2="$(sed -n 's/^Cartella del pacchetto: //p' <<<"$USCITA")"

@@ -31,7 +31,8 @@ Poi apri una sessione nuova.
   `consegna` scrive il pacchetto e lo controlla, poi ti mostra cosa c'è dentro
   e ti chiede l'ok. Alla fine ti dà il file da spedire e un messaggio pronto per
   chi lo riceve.
-- **Per ricevere**, scarica il file e chiedi «cosa mi è arrivato?». La skill
+- **Per ricevere**, salva il file in `~/Ponte/in-arrivo/` e chiedi «cosa mi è
+  arrivato?» (se la cartella non c'è ancora, chiedilo lo stesso). La skill
   `ricevi` controlla l'archivio, lo fa leggere per primo a un lettore isolato e
   ti presenta un riassunto. Poi decidi tu se lavorarlo, solo leggerlo o
   rifiutarlo.

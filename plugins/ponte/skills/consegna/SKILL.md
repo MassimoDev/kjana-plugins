@@ -133,15 +133,24 @@ Nel rilascio 1 il Ponte non spedisce: lo fa la persona, col canale che usa di
 solito (email, WhatsApp, WeTransfer). È un file solo.
 
 1. Mostra il file nel Finder con `open -R <percorso-del-.tar.gz>`.
-2. Dai alla persona un messaggio pronto da incollare per il destinatario,
+2. Di' alla persona che cosa vuol dire «annotato»: il pacchetto **non è
+   partito**, il registro ricorda solo da dove. Se lo manda con WhatsApp o
+   Telegram, va allegato come **documento**, così arriva intatto.
+3. Dai alla persona un messaggio pronto da incollare per il destinatario,
    adattato al nome e al titolo:
 
-   > Ti ho mandato «Titolo» col Ponte. È il file `<nome>.tar.gz`.
-   > Se hai il plugin ponte, scaricalo e scrivi al tuo Claude Code: «cosa mi è
-   > arrivato?». Se non ce l'hai, fai doppio clic sul file, trascina la
-   > cartella che esce in Claude Code e scrivi: «leggi PACCHETTO.md in questa
-   > cartella e dimmi cosa mi chiede».
-   > Per installare il plugin: `/plugin marketplace add MassimoDev/kjana-plugins`
-   > e poi `/plugin install ponte@kjana`.
+   > Ti ho mandato «Titolo» col Ponte. È il file `<nome>.tar.gz`: aprilo sul
+   > computer dove usi Claude Code.
+   > Se hai il plugin ponte, salvalo nella cartella `Ponte/in-arrivo` della tua
+   > home e scrivi al tuo Claude Code: «cosa mi è arrivato?». Se la cartella
+   > non c'è ancora, scrivilo lo stesso: te la apre lui e ti dice dove
+   > trascinare il file.
+   > Se non hai il plugin, fai doppio clic sul file, trascina la cartella che
+   > esce in Claude Code e scrivi: «leggi PACCHETTO.md in questa cartella e
+   > dimmi cosa mi chiede». Per rispondermi col Ponte però il plugin serve:
+   > `/plugin marketplace add MassimoDev/kjana-plugins`, poi
+   > `/plugin install ponte@kjana` e una sessione nuova.
+4. Ricorda alla persona dove mettere la risposta quando arriva:
+   `~/Ponte/in-arrivo/`, poi «ha risposto <nome>?».
 
 Non mandare tu il file e non scrivere al destinatario: lo fa la persona.

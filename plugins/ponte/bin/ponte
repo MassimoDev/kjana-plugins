@@ -23,7 +23,7 @@ set -o pipefail
 export LC_ALL=C
 export COPYFILE_DISABLE=1   # macOS: niente file ._ negli archivi
 
-VERSIONE="0.1.0"
+VERSIONE="0.1.1"
 PONTE_HOME="${PONTE_HOME:-$HOME/Ponte}"
 PONTE_CONFIG="${PONTE_CONFIG:-$HOME/.config/ponte}"
 LIMITE_PACCHETTO=$((200 * 1024 * 1024))        # quello che accetterà la cassetta postale
@@ -64,9 +64,21 @@ innocuo() { printf '%s' "$1" | tr -d '\000-\037\177' | cut -c1-160; }
 # Una riga sola, senza caratteri di controllo: per i valori dell'intestazione.
 una_riga() { printf '%s' "$1" | tr -d '\000-\010\013-\037\177' | tr '\t\n\r' '   ' | cut -c1-200; }
 
+# Il nome di una cartella da un titolo: «La query dell’errore» → la-query-dell-errore.
+# Senza iconv: quello di macOS esce con errore anche quando converte bene (e il
+# vecchio «|| printf» ripeteva il titolo intero), e perde lettere («città» →
+# «c`att?»). Le lettere accentate più comuni diventano la lettera semplice,
+# tutto il resto un trattino. Con LC_ALL=C sed lavora sui byte, e le sequenze
+# UTF-8 qui sotto si confrontano come tali.
 slug() {
   local s
-  s="$(printf '%s' "$1" | iconv -f UTF-8 -t ASCII//TRANSLIT 2>/dev/null || printf '%s' "$1")"
+  s="$(printf '%s' "$1" | sed -E \
+    -e 's/(à|á|â|ä|ã|å|À|Á|Â|Ä|Ã|Å)/a/g' \
+    -e 's/(è|é|ê|ë|È|É|Ê|Ë)/e/g' \
+    -e 's/(ì|í|î|ï|Ì|Í|Î|Ï)/i/g' \
+    -e 's/(ò|ó|ô|ö|õ|ø|Ò|Ó|Ô|Ö|Õ|Ø)/o/g' \
+    -e 's/(ù|ú|û|ü|Ù|Ú|Û|Ü)/u/g' \
+    -e 's/(ç|Ç)/c/g' -e 's/(ñ|Ñ)/n/g' -e 's/ß/ss/g')"
   s="$(printf '%s' "$s" | tr 'A-Z' 'a-z' | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//' | cut -c1-50)"
   s="$(printf '%s' "$s" | sed -E 's/-+$//')"
   [ -n "$s" ] || s="pacchetto"
@@ -208,6 +220,9 @@ cmd_nuovo() {
   cartella="$PONTE_HOME/uscita/$(date +%Y-%m-%d)-$(slug "$titolo")"
   if [ -e "$cartella" ]; then cartella="$cartella-$(printf '%s' "$id" | cut -c15-)"; fi
   mkdir -p "$cartella/allegati" || return 1
+  # La risposta arriverà qui: la cartella deve esserci prima, perché chi la
+  # cerca la trovi.
+  mkdir -p "$PONTE_HOME/in-arrivo"
 
   [ -f "$MODELLO" ] || { errore "manca il modello: $MODELLO"; return 1; }
   # I valori passano dall'ambiente e si sostituiscono senza espressioni
@@ -679,9 +694,10 @@ cmd_io() {
     cat "$PONTE_CONFIG/nome" 2>/dev/null || { errore "nome non impostato: ponte io \"Nome Cognome\""; return 5; }
     return 0
   fi
-  mkdir -p "$PONTE_CONFIG"
+  mkdir -p "$PONTE_CONFIG" "$PONTE_HOME/in-arrivo"
   una_riga "$*" >"$PONTE_CONFIG/nome"
   printf 'Ti chiami: %s\n' "$(cat "$PONTE_CONFIG/nome")"
+  printf 'I pacchetti che ricevi vanno in: %s\n' "$PONTE_HOME/in-arrivo"
 }
 
 cmd_annota() {
